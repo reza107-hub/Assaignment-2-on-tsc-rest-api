@@ -30,7 +30,6 @@ const getAllUser = async (req: Request, res: Response) => {
       message: "Users fetched successfully!",
       data: result,
     });
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     res.status(500).json({
       success: false,
@@ -40,7 +39,30 @@ const getAllUser = async (req: Request, res: Response) => {
   }
 };
 
+const getSingleUser = async (req: Request, res: Response) => {
+  try {
+    const id = req.params.userId;
+    const result = await userServices.getSingleUserFromDB(parseInt(id));
+    res.status(200).json({
+      success: true,
+      message: "User fetched successfully!",
+      data: result,
+    });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: error.message || "Something went wrong",
+      error: {
+        code: error.code || 500,
+        description: error.description || "User not found!",
+      },
+    });
+  }
+};
+
 export const userController = {
   createUser,
   getAllUser,
+  getSingleUser,
 };
