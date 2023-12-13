@@ -8,6 +8,12 @@ const createUserIntoDB = async (userData: TUser) => {
 };
 
 
+const getAllUserFromDB = async () => {
+  const result = await User.find().select("-password");
+  return result;
+};
+
 export const userServices = {
   createUserIntoDB,
+  getAllUserFromDB,
 };
