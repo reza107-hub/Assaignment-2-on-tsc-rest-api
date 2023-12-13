@@ -106,10 +106,34 @@ const deleteAUser = async (req: Request, res: Response) => {
   }
 };
 
+const addProductToOrder = async (req: Request, res: Response) => {
+  try {
+    const userId = req.params.userId;
+    const orderData = req.body;
+    // console.log(userId,orderData)
+    await userServices.addProductToOrderDB(parseInt(userId), orderData);
+    res.status(200).json({
+      success: true,
+      message: "Order created successfully!",
+      data: null,
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: error.message || "Something went wrong",
+      error: {
+        code: error.code || 500,
+        description: error.description || "User not found!",
+      },
+    });
+  }
+};
+
 export const userController = {
   createUser,
   getAllUser,
   getSingleUser,
   updateASingleUser,
   deleteAUser,
+  addProductToOrder,
 };
