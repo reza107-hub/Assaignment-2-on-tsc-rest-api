@@ -42,7 +42,7 @@ Before running the application, ensure that you have the following installed on 
      npm run start:dev
      ```
 
-     The server will be running at `http://localhost:5000`.
+     The server will be running at `http://localhost:3000`.
 
    - In Production Mode:
 
@@ -51,6 +51,6 @@ Before running the application, ensure that you have the following installed on 
      npm start
      ```
 
-     The server will be running at `http://localhost:5000`.
+     The server will be running at `http://localhost:3000`.
 
 
