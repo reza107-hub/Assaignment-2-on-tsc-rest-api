@@ -129,6 +129,58 @@ const addProductToOrder = async (req: Request, res: Response) => {
   }
 };
 
+const retrieveOrdersOfaSingleUser = async (req: Request, res: Response) => {
+  try {
+    const userId = req.params.userId;
+
+    // console.log(userId,orderData)
+    const result = await userServices.retrieveOrdersOfaSingleUserDB(
+      parseInt(userId)
+    );
+    res.status(200).json({
+      success: true,
+      message: "Order fetched successfully!",
+      data: result,
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: error.message || "Something went wrong",
+      error: {
+        code: error.code || 500,
+        description: error.description || "User not found!",
+      },
+    });
+  }
+};
+
+const getTotalPriceForAnUsersOrder = async (req: Request, res: Response) => {
+  try {
+    const userId = req.params.userId;
+
+    // console.log(userId,orderData)
+    const result = await userServices.getTotalPriceForAnUsersOrderDB(
+      parseInt(userId)
+    );
+    res.status(200).json({
+      success: true,
+      message: "Total price calculated successfully!",
+      data: {
+        "total-price": result,
+      },
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: error.message || "Something went wrong",
+      error: {
+        code: error.code || 500,
+        description: error.description || "User not found!",
+      },
+    });
+  }
+};
+
 export const userController = {
   createUser,
   getAllUser,
@@ -136,4 +188,6 @@ export const userController = {
   updateASingleUser,
   deleteAUser,
   addProductToOrder,
+  retrieveOrdersOfaSingleUser,
+  getTotalPriceForAnUsersOrder,
 };
