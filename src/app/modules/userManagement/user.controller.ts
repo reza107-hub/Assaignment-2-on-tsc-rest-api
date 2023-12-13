@@ -48,7 +48,31 @@ const getSingleUser = async (req: Request, res: Response) => {
       message: "User fetched successfully!",
       data: result,
     });
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: error.message || "Something went wrong",
+      error: {
+        code: error.code || 500,
+        description: error.description || "User not found!",
+      },
+    });
+  }
+};
+
+const updateASingleUser = async (req: Request, res: Response) => {
+  try {
+    const userId = req.params.userId;
+    const updatedData = req.body;
+    const result = await userServices.updateASingleUserFromDB(
+      parseInt(userId),
+      updatedData
+    );
+    res.status(200).json({
+      success: true,
+      message: "User updated successfully!",
+      data: result,
+    });
   } catch (error: any) {
     res.status(500).json({
       success: false,
@@ -65,4 +89,5 @@ export const userController = {
   createUser,
   getAllUser,
   getSingleUser,
+  updateASingleUser,
 };
